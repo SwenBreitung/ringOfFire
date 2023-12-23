@@ -1,11 +1,23 @@
-<app-player></app-player>
+<app-player *ngFor="let p of game.player; let i = index" [ngStyle]="{'top.px': 100 + (i * 50)}" class="player-position" [playerAktiv]="i == game.currentPlayer" [name]="p">
+</app-player>
+
+
+
+
+
 <section class="game-section">
     <div class="card-stack">
         <img *ngFor="let c of [1,2,3,4]; let i = index;" [ngStyle]="{'right.px': i*5}" src="./../../assets/img/playing_cards-master/card_cover.png" alt="">
         <img (click)="pickCard()" class="top-card" style="right:25px" src="./../../assets/img/playing_cards-master/card_cover.png" alt="">
 
-        <img *ngFor="let card of game.playerCard; let i = index" class="card-side-stack" src="./../../assets/img/playing_cards-master/{{card}}.png" alt="">
+        <img *ngFor="let card of game.playerCard; let i = index" class="card-side-stack" src="./../../assets/img/playing_cards-master/{{ card }}.png" alt="">
 
         <img (click)="pickCard()" class=" pick-card" *ngIf="pickCardAnimation" style="right:25px" src="./../../assets/img/playing_cards-master/{{ currentCard }}.png" alt="">
     </div>
 </section>
+
+<button mat-fab (click)="openDialog()" color="primary" class="btn-add">
+<mat-icon >add</mat-icon>
+</button>
+
+<app-game-discription [card]="currentCard"></app-game-discription>

@@ -1,11 +1,30 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from './../../models/game';
-// import {Player} from './../player/player.component';
+import { PlayerComponent } from '../player/player.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatDialog } from '@angular/material/dialog';
+import { GameDiscriptionComponent } from '../game-discription/game-discription.component';
+import { DialogAddPayerComponent } from '../dialog-add-payer/dialog-add-payer.component';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+  PlayerComponent,
+  MatButtonModule,
+  MatDividerModule,
+  MatIconModule,FormsModule ,
+  MatInputModule,
+  MatFormFieldModule,
+  DialogAddPayerComponent,
+  GameDiscriptionComponent,
+  
+],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'] 
 })
@@ -16,9 +35,10 @@ export class GameComponent {
   game: Game;
   currentCard:string ="";
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.game = new Game();
     console.log(this.game);
+    
   }
 
   ngOnInit(): void {
@@ -32,7 +52,8 @@ export class GameComponent {
       console.log('error',this.currentCard)
       return;
     }
-
+this.game.currentPlayer++;
+this.game.currentPlayer= this.game.currentPlayer % this.game.player.length;
     this.currentCard = card;
     this.pickCardAnimation = true;   
     
@@ -48,7 +69,15 @@ export class GameComponent {
     this.game = new Game(); 
   }
 
-  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddPayerComponent, {
+
+    });
+  dialogRef.afterClosed().subscribe(name=> {
+      console.log('The dialog was closed',name);
+     this.game.player.push(name)
+    });
+  }
 }
 
 

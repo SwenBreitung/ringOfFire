@@ -1,0 +1,16 @@
+.player {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: bisque;
+    img {
+        width: 25px;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+}
+
+.playerActiv {
+    background-color: aquamarine !important;
+}
